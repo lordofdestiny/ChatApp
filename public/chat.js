@@ -1,5 +1,5 @@
 $(function() {
-  var socket = io.connect("https://super-chat-app-lod.herokuapp.com:3000");
+  var socket = io.connect("https://super-chat-app-lod.herokuapp.com");
 
   var message = $("#message");
   var username = $("#username");
