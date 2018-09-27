@@ -11,11 +11,12 @@
 
 html {
   height: 100%;
+  padding: 0;
 }
 
 body {
-  margin: 0px;
-  height: 100%;
+  margin: 0;
+  height: 85.4%;
   font-family: "Comfortaa", sans-serif;
 }
 
@@ -36,19 +37,36 @@ h3 {
   margin-bottom: 0.7em;
 }
 
+.loggedin {
+  background-color: #bca9f5;
+  width: max-content;
+  padding: 10px 10px 5px 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
 div#change_username,
 section#input_zone {
   border: 5px outset #8258fa;
 }
 
+section#section_username {
+  height: 5%;
+  margin-bottom: 10px;
+}
+
 div#change_username {
-  height: 3%;
   display: inline-block;
   background-color: #bca9f5;
 }
 
 section#chatroom {
-  border: 5px imset #8258fa;
+  border: 5px inset #8258fa;
+  height: 85.4%;
+  overflow-y: scroll;
+  box-sizing: content-box;
+  background-color: white;
 }
 
 section#input_zone {
@@ -99,4 +117,8 @@ p.message {
 .messageFrom {
   background-color: #d8ca00;
   text-align: left;
+}
+
+.messageAnn {
+  background-color: #f12222;
 }

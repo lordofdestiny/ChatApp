@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 
-var port = process.env.PORT;
-
 //set the template engine ejs
 app.set("view engine", "ejs");
 
@@ -11,11 +9,11 @@ app.use(express.static("public"));
 
 //routes
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("pages/index");
 });
 
-server = app.listen(port, () => {
-  console.log(`Server listening on port ${port}!`);
+server = app.listen(3000, () => {
+  console.log("Server listening on port 3000!");
 });
 
 const io = require("socket.io")(server);

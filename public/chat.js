@@ -1,5 +1,5 @@
 $(function() {
-  var socket = io.connect("https://super-chat-app-lod.herokuapp.com");
+  var socket = io.connect("http://localhost:3000");
 
   var message = $("#message");
   var username = $("#username");
@@ -7,42 +7,52 @@ $(function() {
   var send_username = $("#send_username");
   var chatroom = $("#chatroom");
   var feedback = $("#feedback");
+  var lastSender = "";
 
   send_username.click(() => {
-    if (username.val() === "") {
-      alert("You have to enter username!");
-      return;
-    }
-    console.log(username.val());
-    socket.emit("change_username", { username: username.val() });
-    $("#change_username").fadeOut();
+    sendUsername(username, socket);
+    currentUsername = username.val();
   });
 
-  socket.on("new_message", data => {
-    console.log(data);
-    var style = "";
-    var cssClass =
-      data.username === username.val() ? "messageTo" : "messageFrom";
-    if (data.username === "Anonymous") style = "background-color: #f12222";
-    console.log(cssClass);
-    chatroom.append(
-      `<p class='message ${cssClass}' style='${style}'> ${data.username}: ${
-        data.message
-      } </p>`
-    );
-    feedback.html("");
+  username.keypress(e => {
+    if (e.which == 13) {
+      sendUsername(username, socket);
+      currentUsername = username.val();
+    }
   });
 
   send_message.click(() => {
-    socket.emit("new_message", {
-      message: message.val(),
-      username: username.val()
-    });
-    message.val("");
+    sendMessage(username, message, socket);
   });
 
-  message.bind("keypress", () => {
-    socket.emit("typing");
+  message.keypress(e => {
+    if (e.which == 13) {
+      sendMessage(username, message, socket);
+    }
+  });
+
+  socket.on("new_message", data => {
+    var style = "";
+    var cssClass =
+      data.username === username.val() ? "messageTo" : "messageFrom";
+    if (data.username === "Anonymous") {
+      cssClass += " " + "messageAnn";
+    }
+    chatroom.append(
+      `<p class='message ${cssClass}'>
+      ${lastSender === data.username ? "" : data.username}: ${
+        data.message
+      } </p>`
+    );
+    chatroom.animate({ scrollTop: $(this).height() }, "slow");
+    feedback.html("");
+    lastSender = data.username;
+  });
+
+  message.bind("keypress", e => {
+    if (e.which != 13) {
+      socket.emit("typing");
+    }
   });
 
   socket.on("typing", data => {
