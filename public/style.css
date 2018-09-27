@@ -1,0 +1,102 @@
+/* @mixin vertiacal-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+} */
+*/ * {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  height: 100%;
+  font-family: "Comfortaa", sans-serif;
+}
+
+header {
+  text-align: center;
+}
+
+h1 {
+  font-family: "Comfortaa", sans-serif;
+  margin: 1em auto 0.5em auto;
+}
+
+h3 {
+  font-size: 0.8em;
+  text-align: right;
+  float: right;
+  margin-right: 0.5em;
+  margin-bottom: 0.7em;
+}
+
+div#change_username,
+section#input_zone {
+  border: 5px outset #8258fa;
+}
+
+div#change_username {
+  height: 3%;
+  display: inline-block;
+  background-color: #bca9f5;
+}
+
+section#chatroom {
+  border: 5px imset #8258fa;
+}
+
+section#input_zone {
+  height: 7%;
+  text-align: center;
+  background-color: #bca9f5;
+}
+
+.vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+input#username {
+  font-family: "Comfortaa", sans-serif;
+}
+
+input#message {
+  display: inline-block;
+  width: 88%;
+  height: 70%;
+  font-family: "Comfortaa", sans-serif;
+  font-size: 2vh;
+}
+
+button#send_message {
+  display: inline-block;
+  height: 70%;
+  width: 10%;
+}
+
+p.message {
+  margin: 0px;
+  height: 40px;
+  font-size: 2vh;
+  font-family: "Comfortaa", sans-serif;
+  padding: 1vh;
+}
+
+.messageTo {
+  background-color: #3c63ce;
+  text-align: right;
+}
+
+.messageFrom {
+  background-color: #d8ca00;
+  text-align: left;
+}
