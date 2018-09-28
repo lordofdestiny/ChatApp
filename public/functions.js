@@ -10,9 +10,12 @@ function sendUsername(username, socket) {
   );
 }
 
-function sendMessage(username, message, socket) {
+function sendMessage(username, message, socket, color) {
   var text = message.val().trim();
-  if (text === "") return;
+  if (text === "") {
+    alert("You can't send an empty message!");
+    return;
+  }
   socket.emit("new_message", {
     message: text,
     username: username.val(),
