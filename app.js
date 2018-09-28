@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+const tools = require("./functions");
+var number = 0;
+var maxUsers = 15;
 
 //set the template engine e js
 app.set("view engine", "ejs");
@@ -19,25 +22,41 @@ server = app.listen(3000, () => {
 const io = require("socket.io")(server);
 
 io.on("connection", socket => {
-  console.log("New user connected");
+  if (number >= maxUsers) {
+    socket.emit("declined");
+    socket.disconnect(true);
+  } else {
+    socket.username = "Anonymous";
 
-  socket.username = "Anonymous";
+    number++;
+    console.log(`User connected, current users ${number}`);
+    socket.color = tools.rainbow(maxUsers, number);
 
-  socket.on("change_username", data => {
-    socket.username = data.username;
-    console.log(`Username changed to ${data.username}`);
-  });
-
-  socket.on("new_message", data => {
-    io.sockets.emit("new_message", {
-      message: data.message,
-      username: socket.username,
-      url: data.url
+    socket.on("change_username", data => {
+      socket.username = data.username;
+      console.log(`Username changed to ${data.username}`);
     });
-    console.log("Message received");
-  });
 
-  socket.on("typing", data => {
-    socket.broadcast.emit("typing", { username: socket.username });
-  });
+    socket.on("new_message", data => {
+      io.sockets.emit("new_message", {
+        message: data.message,
+        username: socket.username,
+        url: data.url,
+        color: socket.color
+      });
+    });
+
+    socket.on("typing", data => {
+      socket.broadcast.emit("typing", { username: socket.username });
+    });
+
+    socket.on("disconnect", () => {
+      number--;
+      socket.broadcast.emit("user_left", {
+        username: socket.username,
+        color: socket.color
+      });
+      console.log(`User disconnected, current users: ${number}`);
+    });
+  }
 });

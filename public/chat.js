@@ -7,6 +7,7 @@ $(function() {
   var send_username = $("#send_username");
   var chatroom = $("#chatroom");
   var feedback = $("#feedback");
+  var color = "";
 
   send_username.click(() => {
     sendUsername(username, socket);
@@ -21,13 +22,27 @@ $(function() {
   });
 
   send_message.click(() => {
-    sendMessage(username, message, socket);
+    sendMessage(username, message, socket, color);
   });
 
   message.keypress(e => {
     if (e.which == 13) {
-      sendMessage(username, message, socket);
+      sendMessage(username, message, socket, color);
     }
+  });
+
+  socket.on("declined", () => {
+    alert("You can't connct now, channel is ful!");
+    $("body")
+      .children()
+      .hide();
+    $("body").append(
+      `<h1 style="text-align: center">Please try again later, some user may leave chat!</h1`
+    );
+  });
+
+  socket.on("color", data => {
+    color = data.color;
   });
 
   socket.on("new_message", data => {
@@ -40,13 +55,17 @@ $(function() {
     if (data.url) {
       chatroom.append(
         `<p class='message'>
-        <span class="${cssClass}">${data.username}</span> : 
+        <span style="color: ${data.color}; font-weight:bold">${
+          data.username
+        }</span> : 
         <a href="${data.message}">${data.message}</a></p>`
       );
     } else {
       chatroom.append(
         `<p class='message'>
-        <span class="${cssClass}">${data.username}</span> : 
+        <span style="color: ${data.color}; font-weight:bold">${
+          data.username
+        }</span> : 
         ${data.message}</p>`
       );
     }
@@ -65,5 +84,12 @@ $(function() {
 
   socket.on("typing", data => {
     feedback.html(`<p><i>${data.username} is typing...</i></p>`);
+  });
+
+  socket.on("user_left", data => {
+    chatroom.append(`<p class='message'>
+    <span style="color: ${data.color}; font-weight:bold">${
+      data.username
+    }</span> has disconnected. </p>`);
   });
 });
