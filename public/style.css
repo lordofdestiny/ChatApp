@@ -25,7 +25,6 @@ header {
 }
 
 h1 {
-  font-family: "Comfortaa", sans-serif;
   margin: 1em auto 0.5em auto;
 }
 
@@ -83,15 +82,10 @@ section#input_zone {
   transform: translateY(-50%);
 }
 
-input#username {
-  font-family: "Comfortaa", sans-serif;
-}
-
 input#message {
   display: inline-block;
   width: 88%;
   height: 70%;
-  font-family: "Comfortaa", sans-serif;
   font-size: 2vh;
 }
 
@@ -104,7 +98,6 @@ button#send_message {
 p.message {
   margin: 0px;
   font-size: 2.5vh;
-  font-family: "Comfortaa", sans-serif;
   padding: 0.75vh;
 }
 
