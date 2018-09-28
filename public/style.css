@@ -16,7 +16,7 @@ html {
 
 body {
   margin: 0;
-  height: 85.4%;
+  height: 85.2%;
   font-family: "Comfortaa", sans-serif;
 }
 
@@ -63,7 +63,7 @@ div#change_username {
 
 section#chatroom {
   border: 5px inset #8258fa;
-  height: 85.4%;
+  height: 85.2%;
   overflow-y: scroll;
   box-sizing: content-box;
   background-color: white;
@@ -103,22 +103,22 @@ button#send_message {
 
 p.message {
   margin: 0px;
-  height: 40px;
-  font-size: 2vh;
+  font-size: 2.5vh;
   font-family: "Comfortaa", sans-serif;
-  padding: 1vh;
+  padding: 0.75vh;
 }
 
 .messageTo {
-  background-color: #3c63ce;
-  text-align: right;
+  font-weight: bold;
+  color: #3c63ce;
 }
 
 .messageFrom {
-  background-color: #d8ca00;
-  text-align: left;
+  font-weight: bold;
+  color: #d8ca00;
 }
 
 .messageAnn {
-  background-color: #f12222;
+  font-weight: bold;
+  color: #f12222;
 }

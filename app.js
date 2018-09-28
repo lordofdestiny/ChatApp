@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-//set the template engine ejs
+//set the template engine e js
 app.set("view engine", "ejs");
 
 //middlewares
@@ -31,7 +31,8 @@ io.on("connection", socket => {
   socket.on("new_message", data => {
     io.sockets.emit("new_message", {
       message: data.message,
-      username: socket.username
+      username: socket.username,
+      url: data.url
     });
     console.log("Message received");
   });

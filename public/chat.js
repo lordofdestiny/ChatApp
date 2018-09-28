@@ -1,5 +1,5 @@
 $(function() {
-  var socket = io.connect("http://localhost:3000");
+  var socket = io.connect("http://192.168.9.224:3000");
 
   var message = $("#message");
   var username = $("#username");
@@ -7,7 +7,6 @@ $(function() {
   var send_username = $("#send_username");
   var chatroom = $("#chatroom");
   var feedback = $("#feedback");
-  var lastSender = "";
 
   send_username.click(() => {
     sendUsername(username, socket);
@@ -38,15 +37,24 @@ $(function() {
     if (data.username === "Anonymous") {
       cssClass += " " + "messageAnn";
     }
-    chatroom.append(
-      `<p class='message ${cssClass}'>
-      ${lastSender === data.username ? "" : data.username}: ${
-        data.message
-      } </p>`
+    if (data.url) {
+      chatroom.append(
+        `<p class='message'>
+        <span class="${cssClass}">${data.username}</span> : 
+        <a href="${data.message}">${data.message}</a></p>`
+      );
+    } else {
+      chatroom.append(
+        `<p class='message'>
+        <span class="${cssClass}">${data.username}</span> : 
+        ${data.message}</p>`
+      );
+    }
+    chatroom.animate(
+      { scrollTop: $("#chatroom").prop("scrollHeight") },
+      "medium"
     );
-    chatroom.animate({ scrollTop: $(this).height() }, "slow");
     feedback.html("");
-    lastSender = data.username;
   });
 
   message.bind("keypress", e => {

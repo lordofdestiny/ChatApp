@@ -15,7 +15,25 @@ function sendMessage(username, message, socket) {
   if (text === "") return;
   socket.emit("new_message", {
     message: text,
-    username: username.val()
+    username: username.val(),
+    url: ValidURL(text)
   });
   message.val("");
+}
+
+function generateEmptyString(len) {
+  var string = "";
+  for (let i = 0; i < len; i++) {
+    string += "&nbsp;";
+  }
+  return string;
+}
+
+function ValidURL(str) {
+  var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+  if (!regex.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
 }
