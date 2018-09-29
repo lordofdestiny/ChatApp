@@ -56,7 +56,7 @@ io.on("connection", socket => {
         username: socket.username,
         color: socket.color
       });
-      console.log(`User disconnected, current users: ${number}`);
+      console.log(`User has left, current users: ${number}`);
     });
   }
 });

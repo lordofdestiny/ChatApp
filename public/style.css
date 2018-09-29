@@ -107,7 +107,6 @@ button#send_message:hover {
 button#send_message:active {
   background-color: #c5dfc6;
   box-shadow: 0 5px rgb(75, 74, 74);
-  transform: translateY(-1.15em);
 }
 
 .typing {
