@@ -10,33 +10,22 @@ function sendUsername(username, socket) {
   );
 }
 
-function sendMessage(username, message, socket, color) {
+function sendMessage(message, socket) {
   var text = message.val().trim();
   if (text === "") {
     alert("You can't send an empty message!");
     return;
   }
   socket.emit("new_message", {
-    message: text,
-    username: username.val(),
-    url: ValidURL(text)
+    message: text
   });
   message.val("");
 }
 
-function generateEmptyString(len) {
-  var string = "";
-  for (let i = 0; i < len; i++) {
-    string += "&nbsp;";
-  }
-  return string;
+function generateListDiv(data) {
+  return `<p class="user" style="color:${data.color}">${data.username}</p>`;
 }
 
-function ValidURL(str) {
-  var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-  if (!regex.test(str)) {
-    return false;
-  } else {
-    return true;
-  }
+function myScroll(chatroom) {
+  chatroom.animate({ scrollTop: $("#chatroom").prop("scrollHeight") }, "fast");
 }

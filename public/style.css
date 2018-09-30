@@ -1,11 +1,4 @@
-/* @mixin vertiacal-align {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-} */
-*/ * {
+* {
   box-sizing: border-box;
 }
 
@@ -17,7 +10,7 @@ html {
 body {
   margin: 0;
   height: 85.2%;
-  font-family: "Comfortaa", sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
 header {
@@ -45,96 +38,225 @@ h3 {
   border: 2px solid black;
 }
 
-div#change_username,
-section#input_zone {
-  border: 5px outset #8258fa;
-}
-
 section#section_username {
-  height: 5%;
-  margin-bottom: 10px;
+  width: 20%;
+  float: left;
+  margin-left: 10%;
+  box-shadow: 0px 0px 10px 2px gray;
+  background-color: orange;
+  padding: 0.5em;
+  border-radius: 20px 20px 0px 0px;
 }
 
-div#change_username {
-  display: inline-block;
-  background-color: #bca9f5;
+#send_username {
+  height: 40px;
+  margin: 0;
+  width: 30%;
+  float: left;
+  border-width: 2px 2px 2px 0px;
+  border-radius: 0px 10px 10px 0px;
+  border-color: black;
+  border-style: solid;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+  color: #5797ca;
+  background-color: #3d4754;
+}
+
+#send_username:active {
+  background-color: #5797ca;
+  color: #3d4754;
+}
+
+#username {
+  float: left;
+  height: 40px;
+  width: 70%;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px 0px 2px 2px;
+  border-radius: 10px 0px 0px 10px;
+  text-indent: 1em;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 1em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  margin: 0;
+}
+
+section#active_users {
+  margin-left: 10%;
+  float: left;
+  width: 25%;
+  height: 90%;
+  background-color: orange;
+  border-radius: 0px 0px 0px 10px;
+  padding-left: 1em;
+  padding-right: 1em;
+  box-shadow: 0px 0px 10px 2px gray;
+}
+
+div#chatroom_wrapper {
+  margin-right: 10%;
+  margin-bottom: 0;
+  float: right;
+  width: 55%;
+  height: 80%;
+  border-radius: 0px 10px 0px 0px;
+  box-shadow: 0px 0px 10px 2px gray;
+  background-image: url("../img/wallpaper.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 section#chatroom {
-  border: 5px inset #8258fa;
-  height: 85.2%;
+  height: 100%;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
   overflow-y: scroll;
   box-sizing: content-box;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 0px 10px 0px 0px;
 }
 
 section#input_zone {
-  height: 7%;
-  text-align: center;
-  background-color: #bca9f5;
+  float: left;
+  height: 10%;
+  width: 55%;
+  background-color: orange;
+  padding: 0.5em;
+  box-shadow: 0px 0px 10px 2px gray;
+  border-radius: 0px 0px 10px 0px;
 }
 
-.vertical-align {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-input#message {
-  display: inline-block;
-  width: 88%;
-  height: 70%;
-  font-size: 2vh;
+#message {
+  float: left;
+  font-size: 1.5em;
+  resize: none;
+  padding: 0.5em;
+  width: 80% !important;
+  border-radius: 20px 0px 0px 20px;
+  border-width: 2px 0px 2px 2px;
+  border-color: black;
+  border-style: solid;
+  font-family: "Ubuntu", sans-serif;
+  height: 100% !important;
 }
 
 button#send_message {
-  display: inline-block;
-  height: 80%;
-  width: 10%;
-  border-radius: 3px;
+  float: left;
+  border-radius: 0px 20px 20px 0px;
+  border-width: 2px 0px 2px 2px;
+  border-color: black;
+  border-style: solid;
+  font-family: "Ubuntu", sans-serif;
   background-color: rgb(129, 129, 129);
-    color: black;
-    border: 4px solid rgb(81, 163, 84);
-}
-
-button#send_message:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); 
-
+  width: 20%;
+  height: 100%;
+  color: #5797ca;
+  background-color: #3d4754;
+  font-size: 2em;
 }
 
 button#send_message:active {
-  background-color: #c5dfc6;
-  box-shadow: 0 5px rgb(75, 74, 74);
-}
-
-.typing {
-  cursor: pointer;
-}
-
-.steady {
-  opacity: 0.7;
-  cursor: not-allowed;
+  color: #3d4754;
+  background-color: #5797ca;
 }
 
 p.message {
   margin: 0px;
   font-size: 2.5vh;
-  padding: 0.75vh;
+  padding: 0.7em;
+  width: 70%;
+  word-wrap: break-word;
+  border-radius: 20px;
+  margin: 5px 5px 10px 5px;
 }
 
-.messageTo {
-  font-weight: bold;
-  color: #3c63ce;
+p.message:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
-.messageFrom {
-  font-weight: bold;
-  color: #d8ca00;
+span.username {
+  font-weight: bolder;
 }
 
-.messageAnn {
+.self {
+  float: right;
+  color: white;
+  background-color: rgba(51, 49, 51, 0.7);
+}
+
+.reg {
+  float: left;
   font-weight: bold;
-  color: #f12222;
+  background-color: rgba(51, 49, 51, 0.4);
+}
+
+.self2 {
+  display: none;
+}
+
+.separator {
+  height: 0.3em;
+  border: none;
+  border-radius: 0.4em;
+  margin: 0.25em 0 0 0.25em;
+  background-color: rgb(75, 72, 72);
+}
+
+.refresh {
+  width: 4em;
+  height: 4em;
+  background-image: url("./img/refresh.png");
+  background-size: cover;
+  float: right;
+  border: 2px solid orange;
+  border-radius: 5em;
+  background-color: rgba(0, 0, 0, 0);
+  margin: 0.5em 5% 0.5em 0.5em;
+}
+
+.refresh:focus,
+#message,
+#username {
+  outline: 0px;
+}
+
+.refresh:hover {
+  border: 2px solid white;
+}
+
+.user {
+  background-color: seashell;
+  border-radius: 20px;
+  font-weight: bolder;
+  padding: 7px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  text-indent: 3em;
+}
+
+/*Custom scroll*/
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(0, 132, 255);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
 }

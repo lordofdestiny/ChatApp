@@ -47,6 +47,49 @@ function rainbow(numOfSteps, step) {
   return c;
 }
 
+function urlify(text) {
+  var urlRegex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+  return text.replace(urlRegex, url => {
+    return `<a href="${url}">${url}</a>`;
+  });
+  // or alternatively
+  // return text.replace(urlRegex, '<a href="$1">$1</a>')
+}
+
+function getColors(size) {
+  let colors = [];
+  for (let i = 0; i < size; i++) {
+    color = rainbow(15, i + 1);
+    colors[i] = { color: color, used: false };
+  }
+  return colors;
+}
+
+function findFree(colors, size) {
+  for (let i = 0; i < size; i++) {
+    if (!colors[i].used) return i;
+  }
+  return -1;
+}
+
+function generateUsers(clients) {
+  let object = clients.server.sockets.connected;
+  let all = [];
+  let i = 0;
+  for (var prop in object) {
+    let sct = object[prop];
+    if (sct.connected) {
+      all[i] = { id: sct.id, color: sct.color, username: sct.username };
+      i++;
+    }
+  }
+  return all;
+}
+
 module.exports = {
-  rainbow
+  rainbow,
+  urlify,
+  getColors,
+  findFree,
+  generateUsers
 };

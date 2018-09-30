@@ -13,21 +13,33 @@
 
     <section id="section_username">
         <div id="change_username">
-            <input id="username" type="text">
+            <input id="username" maxlength="30" type="text">
             <button id="send_username" type="button">Change username</button>
         </div>
     </section>
 
     <div style="clear: both"></div>
 
-    <section id="chatroom">
-        <section id="feedback"></section>
+    <section id="active_users">
+        <h2 style="float: left">Users online: <span id="count">0</span></h2>
+        <button class="refresh"></button>
+        <div style="clear: both"></div>
+        <hr class="separator">
+        <div id="users"></div>
     </section>
 
+    <div id="chatroom_wrapper">
+        <section id="feedback"></section>
+        <section id="chatroom">
+        </section>
+    </div>
+
     <section id="input_zone">
-        <input id="message" class="vertical-align" type="text" />
+        <textarea id="message" placeholder="Message :)"></textarea>
         <button id="send_message" class="vertical-align" type="button"><b>Send</b></button>
     </section>
+
+    <div style="clear: both"></div>
 
     <!--Javascript scripts-->
     <% include ../partials/scripts.ejs %>
