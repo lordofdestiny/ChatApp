@@ -1,1 +1,5 @@
 npm run start
+editovati typing
+pomeriti naslov
+padding za chatroom
+logged 
