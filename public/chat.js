@@ -9,14 +9,19 @@ $(function() {
   var feedback = $("#feedback");
   var refresh = $(".refresh");
   var users = $("#users");
+  var focused = true;
+  var messages = 0;
+  var title = $("title").text();
 
-  // for (let i = 0; i < 15; i++) {
-  //   let lmao = " reg";
-  //   if (i % 3 === 0) lmao = " self";
-  //   chatroom.append(
-  //     `<p class="message${lmao}">faihfdila hfla f hkhfg alkjfl afg ja;jf akljfh kajf ikah iah ahg ha hafhak  asdj asd</p>`
-  //   );
-  // }
+  window.onfocus = function() {
+    focused = true;
+    messages = 0;
+    $("title").text(title);
+  };
+
+  window.onblur = function() {
+    focused = false;
+  };
 
   refresh.click(() => {
     socket.emit("refreshList", "lmao");
@@ -48,11 +53,17 @@ $(function() {
     sendMessage(message, socket);
   });
 
-  message.keypress(e => {
-    if (e.which == 13) {
-      sendMessage(message, socket);
-    }
-  });
+  message
+    .keypress(e => {
+      if (e.which == 13 && !e.shiftKey) {
+        sendMessage(message, socket);
+      }
+    })
+    .keyup(e => {
+      if (e.which == 13 && !e.shiftKey) {
+        message.val("");
+      }
+    });
 
   socket.on("connected", data => {
     socket.id = data.id;
@@ -90,6 +101,16 @@ $(function() {
     );
     myScroll(chatroom);
     feedback.html("");
+    if (!focused) {
+      messages++;
+      $.titleAlert("New chat message!", {
+        requireBlur: false,
+        stopOnFocus: false,
+        duration: 4000,
+        interval: 700
+      });
+      $("title").text(`(${messages}) ${title}`);
+    }
   });
 
   message.bind("keypress", e => {
