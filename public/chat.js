@@ -6,17 +6,18 @@ $(function() {
   var send_message = $("#send_message");
   var send_username = $("#send_username");
   var chatroom = $("#chatroom");
-  var feedback = $("#feedback");
   var refresh = $(".refresh");
   var users = $("#users");
   var focused = true;
-  var messages = 0;
-  var title = $("title").text();
+  var messageCount = 0;
+  var title = $("title");
+  var titleDefault = title.text();
 
   window.onfocus = function() {
     focused = true;
-    messages = 0;
-    $("title").text(title);
+    messageCount = 0;
+    title.text(titleDefault);
+    toggleFavicon(false);
   };
 
   window.onblur = function() {
@@ -24,16 +25,19 @@ $(function() {
   };
 
   refresh.click(() => {
-    socket.emit("refreshList", "lmao");
+    socket.emit("refreshList");
     refresh.rotate();
   });
 
   socket.on("refreshList", data => {
     users.empty();
-    let size = data.length;
+    let size = data.length - 1;
     $("#count").replaceWith(`<span id="count">${size}</span>`);
     for (let user of data) {
-      users.append(generateListDiv(user));
+      if (socket.id != user.id) {
+        users.append(generateListDiv(user));
+        //isTyisTyping[user.id] = false;
+      }
     }
   });
 
@@ -55,13 +59,19 @@ $(function() {
 
   message
     .keypress(e => {
-      if (e.which == 13 && !e.shiftKey) {
+      if (e.which == 13 && !e.shiftKey && !message.val().length <= 500) {
         sendMessage(message, socket);
       }
     })
     .keyup(e => {
       if (e.which == 13 && !e.shiftKey) {
         message.val("");
+      }
+    })
+    .keydown(() => {
+      console.log(message.val().length);
+      if (message.val().length == 500) {
+        alert("Maximum message duration is 500 characters!");
       }
     });
 
@@ -100,16 +110,18 @@ $(function() {
         ${data.message}</p>`
     );
     myScroll(chatroom);
-    feedback.html("");
+    $(`#${data.id}`).text("");
     if (!focused) {
       messages++;
-      $.titleAlert("New chat message!", {
+      $.titleAlert(`(${messages}) New chat message!`, {
         requireBlur: false,
-        stopOnFocus: false,
+        stopOnFocus: true,
         duration: 4000,
         interval: 700
       });
-      $("title").text(`(${messages}) ${title}`);
+    }
+    if (data.id != socket.id) {
+      toggleFavicon(true);
     }
   });
 
@@ -120,16 +132,14 @@ $(function() {
   });
 
   socket.on("typing", data => {
-    if (data.id != socket.id) {
-      feedback.html(`<p><i>${data.username} is typing...</i></p>`);
-    }
+    $(`#${data.id}`).text("is typing...");
   });
 
   socket.on("user_left", data => {
     chatroom.append(`<p class='message reg'>
     <span style="color: ${data.color}; font-weight:bold">${
       data.username
-    }</span> left. </p>`);
+    }</span> has left. </p>`);
     myScroll(chatroom);
   });
 });

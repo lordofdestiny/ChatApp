@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const tools = require("./server/functions");
-const uuid = require("uuid/v1");
 var number = 0;
 var maxUsers = 15;
 
@@ -30,14 +29,12 @@ io.on("connection", async socket => {
   } else {
     number++;
     console.log(`User connected, current users ${number}`);
-    socket.id = uuid();
     socket.username = "Anonymous";
     socket.index = tools.findFree(colors, maxUsers);
     colors[socket.index].used = true;
     socket.color = colors[socket.index].color;
 
-    let all = tools.generateUsers(io.sockets.clients());
-    io.sockets.emit("refreshList", all);
+    io.sockets.emit("refreshList", tools.generateUsers(io.sockets.clients()));
     socket.emit("connected", {
       id: socket.id,
       color: socket.color,
@@ -47,7 +44,8 @@ io.on("connection", async socket => {
     socket.on("change_username", data => {
       socket.username = data.username;
       socket.emit("change_username", { username: socket.username });
-      console.log(`Username changed to ${data.username}`);
+      //console.log(`Username changed to ${data.username}`);
+      io.sockets.emit("refreshList", tools.generateUsers(io.sockets.clients()));
     });
 
     socket.on("new_message", data => {
@@ -62,13 +60,14 @@ io.on("connection", async socket => {
     socket.on("typing", data => {
       socket.broadcast.emit("typing", {
         id: socket.id,
-        username: socket.username
+        username: socket.username,
+        color: socket.color
       });
     });
 
-    socket.on("refreshList", data => {
+    socket.on("refreshList", () => {
       let all = tools.generateUsers(io.sockets.clients());
-      socket.emit("refreshList", all);
+      io.sockets.emit("refreshList", tools.generateUsers(io.sockets.clients()));
     });
 
     socket.on("disconnect", async () => {

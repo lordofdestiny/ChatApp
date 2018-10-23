@@ -7,16 +7,14 @@
 </head>
 
 <body>
-    <header>
-        <h1>Super Chat</h1>
-    </header>
-
     <section id="section_username">
         <div id="change_username">
             <input id="username" maxlength="30" type="text">
             <button id="send_username" type="button">Change username</button>
         </div>
     </section>
+    <h1 class="mainTitle">Super Chat</h1>
+
 
     <div style="clear: both"></div>
 
@@ -29,13 +27,12 @@
     </section>
 
     <div id="chatroom_wrapper">
-        <section id="feedback"></section>
         <section id="chatroom">
         </section>
     </div>
 
     <section id="input_zone">
-        <textarea id="message" placeholder="Message" autofocus></textarea>
+        <textarea id="message" placeholder="Message" maxlength="500 " autofocus></textarea>
         <button id="send_message" class="vertical-align" type="button"><b>Send</b></button>
     </section>
 

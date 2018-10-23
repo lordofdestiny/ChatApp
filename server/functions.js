@@ -59,7 +59,7 @@ function urlify(text) {
 function getColors(size) {
   let colors = [];
   for (let i = 0; i < size; i++) {
-    color = rainbow(15, i + 1);
+    color = rainbow(15, i);
     colors[i] = { color: color, used: false };
   }
   return colors;
