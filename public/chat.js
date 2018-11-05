@@ -148,7 +148,9 @@ $(function() {
     <p class="message">
     <span style="color: ${data.color}; font-weight:bold">${
       data.username
-    }</span> has left.</p> </div>`);
+    }</span> has left.</p>
+    <p class="time">${data.time}</p>
+    </div>`);
     myScroll(chatroom);
   });
 });

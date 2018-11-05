@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const tools = require("./server/functions");
+const moment = require("moment");
 var number = 0;
 var maxUsers = 15;
 
@@ -79,7 +80,8 @@ io.on("connection", async socket => {
       socket.broadcast.emit("user_left", {
         username: socket.username,
         color: socket.color,
-        id: socket.id
+        id: socket.id,
+        time: moment().format("HH : mm")
       });
       console.log(`User has left, current users: ${number}`);
     });
