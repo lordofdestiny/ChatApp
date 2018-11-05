@@ -1,4 +1,3 @@
-npm run start
 -editovati typing ~DONE~
 -pomeriti naslov ~DONE~
 -scroll user list ~DONE~
@@ -13,4 +12,4 @@ npm run start
 -limit length to 500 chars  ~DONE~
 -E2E
 -Custom theme
--messagee timestamps
+-message timestamps

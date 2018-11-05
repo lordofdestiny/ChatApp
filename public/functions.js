@@ -17,7 +17,8 @@ function sendMessage(message, socket) {
     return;
   }
   socket.emit("new_message", {
-    message: text
+    message: text,
+    time: `${moment().format("HH : mm")}`
   });
   message.val("");
   message.scrollTop(0);

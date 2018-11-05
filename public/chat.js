@@ -102,18 +102,26 @@ $(function() {
       self = " self";
       self2 = " self2";
     }
-    chatroom.append(
-      `<p class='message${self}'>
-        <span class="username${self2}" style="color: ${data.color}">${
-        data.username
-      } : </span>
-        ${data.message}</p>`
-    );
+
+    let p = `<p class="message">
+              <span class="username${self2}" style="color: ${data.color}">${
+      data.username
+    } : </span>${data.message}</p>`;
+
+    let vreme = `<p class="time">${data.time}</p>`;
+
+    let div = `<div class="message${self}">
+                  ${p}
+                  ${vreme}
+               </div>`;
+
+    chatroom.append(div);
+
     myScroll(chatroom);
     $(`#${data.id}`).text("");
     if (!focused) {
-      messages++;
-      $.titleAlert(`(${messages}) New chat message!`, {
+      messageCount++;
+      $.titleAlert(`(${messageCount}) New chat message!`, {
         requireBlur: false,
         stopOnFocus: true,
         duration: 4000,
@@ -136,10 +144,11 @@ $(function() {
   });
 
   socket.on("user_left", data => {
-    chatroom.append(`<p class='message reg'>
+    chatroom.append(`<div class='message reg'>
+    <p class="message">
     <span style="color: ${data.color}; font-weight:bold">${
       data.username
-    }</span> has left. </p>`);
+    }</span> has left.</p> </div>`);
     myScroll(chatroom);
   });
 });

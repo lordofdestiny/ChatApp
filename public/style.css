@@ -166,20 +166,32 @@ button#send_message:active {
   background-color: #5797ca;
 }
 
-p.message {
-  margin: 0px;
+div.message:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+div.message {
   font-size: 2.5vh;
   padding: 0.7em;
   width: 70%;
   word-wrap: break-word;
   border-radius: 20px;
-  margin: 5px 5px 10px 5px;
+  margin: 5px 5px 0px 5px;
 }
 
-p.message:after {
-  content: "";
-  display: block;
-  clear: both;
+p.message {
+  margin: 0;
+}
+
+p.time {
+  text-align: right;
+  font-style: italic;
+  font-weight: bold;
+  margin: 0;
+  color: rgb(200, 200, 200);
+  font-size: 12px;
 }
 
 span.username {
