@@ -12,4 +12,4 @@
 -limit length to 500 chars  ~DONE~
 -E2E
 -Custom theme
--message timestamps
+-message timestamps ~DONE~

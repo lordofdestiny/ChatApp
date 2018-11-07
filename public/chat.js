@@ -34,6 +34,7 @@ $(function() {
     let size = data.length - 1;
     $("#count").replaceWith(`<span id="count">${size}</span>`);
     for (let user of data) {
+      console.log(user);
       if (socket.id != user.id) {
         users.append(generateListDiv(user));
         //isTyisTyping[user.id] = false;
@@ -69,7 +70,6 @@ $(function() {
       }
     })
     .keydown(() => {
-      console.log(message.val().length);
       if (message.val().length == 500) {
         alert("Maximum message duration is 500 characters!");
       }

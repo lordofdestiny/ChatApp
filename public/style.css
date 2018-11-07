@@ -82,7 +82,7 @@ section#active_users {
   margin-left: 10%;
   float: left;
   width: 25%;
-  height: 100%;
+  height: 90.1%;
   overflow: hidden;
   background-color: orange;
   border-radius: 0px 0px 0px 10px;
@@ -246,7 +246,7 @@ span.username {
 
 .user {
   font-weight: bolder;
-  float: left;
+  /*float: left;*/
 }
 
 .id {
@@ -258,15 +258,10 @@ span.username {
 .userWrapper {
   background-color: seashell;
   border-radius: 20px;
-  position: absolute;
   width: auto;
-  left: 0;
-  right: 0;
+  height: auto;
   padding: 5px 40px 5px 15px;
-}
-
-.userWrapper::after {
-  clear: both;
+  margin-bottom: 5px;
 }
 
 /*Custom scroll*/
