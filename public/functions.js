@@ -4,10 +4,9 @@ function sendUsername(username, socket) {
     return;
   }
   socket.emit("change_username", { username: username.val() });
-  $("#change_username").hide();
-  $("#section_username").append(
-    `<p class="loggedin">You are logged in as:<br/> <b>${username.val()}</b></p>`
-  );
+  $(".changeUsername").hide();
+  $(".loggedin").show();
+  $("#loggedInUsername").text(username.val());
 }
 
 function sendMessage(message, socket) {

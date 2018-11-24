@@ -12,6 +12,7 @@ $(function() {
   var messageCount = 0;
   var title = $("title");
   var titleDefault = title.text();
+  $(".loggedin").hide(); //because it shold not be seen at start
 
   window.onfocus = function() {
     focused = true;

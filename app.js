@@ -1,9 +1,10 @@
 const express = require("express");
-const app = express();
 const tools = require("./server/functions");
 const moment = require("moment");
-var number = 0;
-var maxUsers = 15;
+
+const app = express(),
+  server = require("http").createServer(app),
+  io = require("socket.io").listen(server);
 
 //set the template engine e js
 app.set("view engine", "ejs");
@@ -16,11 +17,12 @@ app.get("/", (req, res) => {
   res.render("pages/index");
 });
 
-server = app.listen(3000, () => {
+server.listen(3000, () => {
   console.log("Server listening on port 3000!");
 });
 
-const io = require("socket.io")(server);
+var number = 0;
+var maxUsers = 15;
 var colors = tools.getColors(15);
 
 io.on("connection", async socket => {

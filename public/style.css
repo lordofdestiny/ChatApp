@@ -1,164 +1,204 @@
+/*General*/
+
 @import url("https://fonts.googleapis.com/css?family=Ubuntu");
 
 * {
-  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
 }
 
 html {
-  height: 100%;
-  padding: 0;
+  height: 95%;
 }
 
 body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  height: 95%;
   margin: 0;
-  height: 85.2%;
-  font-family: "Ubuntu", sans-serif;
-  padding-top: 2em;
+  padding: 1em;
 }
 
+/*Header*/
+
 header {
-  text-align: center;
+  width: 90%;
+  display: flex;
+  font-size: 1em;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  flex-grow: 0;
+  padding: 1em 0;
 }
 
 .mainTitle {
-  float: right;
-  margin: 0em 10% 0em auto;
+  font-size: 2.5em;
+  margin: 0;
 }
+
+/*Username*/
 
 .loggedin {
   border-radius: 5px;
   font-size: 20px;
   margin: 0;
-  height: 40px;
 }
 
-section#section_username {
-  width: 25%;
-  float: left;
-  margin-left: 10%;
-  box-shadow: 0px 0px 10px 2px gray;
+.changeUsername {
+  /* box-shadow: 0px 0px 10px 2px gray; */
   background-color: orange;
   padding: 0.5em;
-  border-radius: 20px 20px 0px 0px;
-}
-
-#send_username {
-  height: 40px;
-  margin: 0;
-  width: 30%;
-  float: left;
-  border-width: 2px 2px 2px 0px;
-  border-radius: 0px 10px 10px 0px;
-  border-color: black;
-  border-style: solid;
-  font-family: "Ubuntu", sans-serif;
-  font-weight: bold;
-  color: #5797ca;
-  background-color: #3d4754;
-}
-
-#send_username:active {
-  background-color: #5797ca;
-  color: #3d4754;
+  display: flex;
+  flex-flow: row wrap;
+  border-radius: 20px 0 0 0;
 }
 
 #username {
-  float: left;
-  height: 40px;
-  width: 70%;
+  display: flex;
   border-color: black;
   border-style: solid;
   border-width: 2px 0px 2px 2px;
   border-radius: 10px 0px 0px 10px;
   text-indent: 1em;
-  font-family: "Ubuntu", sans-serif;
   font-size: 1em;
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
+  padding: 0.25em 0;
   margin: 0;
+  flex: 2;
 }
 
-section#active_users {
-  margin-left: 10%;
-  float: left;
-  width: 25%;
-  height: 100%;
-  overflow: hidden;
+.sendUsername {
+  display: flex;
+  border-width: 2px 2px 2px 0px;
+  border-radius: 0px 10px 10px 0px;
+  border-color: black;
+  border-style: solid;
+  font-weight: bold;
+  font-size: 1em;
+  color: #5797ca;
+  background-color: #3d4754;
+  margin: 0;
+  padding: 0.25em;
+  flex: 1;
+  justify-content: center;
+}
+
+.sendUsername:active {
+  background-color: #5797ca;
+  color: #3d4754;
+}
+
+/*Main*/
+
+.main {
+  display: flex;
+  width: 90%;
+  flex-basis: 100%;
+  justify-content: center;
+  box-shadow: 0px 0px 10px 2px gray;
+  border-radius: 20px;
+}
+
+.side {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 30%;
+}
+
+/*Active users*/
+
+.activeUsers {
+  border-radius: 0 0 0 20px;
+
+  display: flex;
+  flex-basis: 100%;
   background-color: orange;
-  border-radius: 0px 0px 0px 10px;
+  justify-content: flex-start;
+  flex-flow: column nowrap;
+  padding: 0.5em 0.5em 0.5em 0.5em;
   padding-left: 1em;
   padding-right: 1em;
-  box-shadow: 0px 0px 10px 2px gray;
+  /* box-shadow: 0px 0px 10px 2px gray; */
+}
+
+.activeUsersHeader {
+  display: flex;
+  flex-grow: 0;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #users {
-  overflow-y: scroll;
-  height: 80%;
-  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+  flex-basis: 100%;
+}
+
+/*Chat*/
+
+.chat {
+  display: flex;
+  flex-basis: 70%;
+  flex-flow: column nowrap;
 }
 
 div#chatroom_wrapper {
-  margin-right: 10%;
+  flex: 12;
   margin-bottom: 0;
-  float: right;
-  width: 55%;
   height: 90%;
-  border-radius: 0px 10px 0px 0px;
-  box-shadow: 0px 0px 10px 2px gray;
+  /* box-shadow: 0px 0px 10px 2px gray; */
   background-image: url("../img/wallpaper.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  position: relative;
 }
 
-section#chatroom {
+div#chatroom {
+  display: flex;
+  flex-flow: column nowrap;
   height: 100%;
   padding-left: 0.5em;
   padding-right: 0.5em;
   overflow-y: auto;
   box-sizing: content-box;
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 0px 10px 0px 0px;
 }
 
-section#input_zone {
-  float: left;
-  height: 10%;
-  width: 55%;
+div#input_zone {
+  flex: 1;
+  display: flex;
+  flex-flow: row nowrap;
   background-color: orange;
   padding: 0.5em;
-  box-shadow: 0px 0px 10px 2px gray;
-  border-radius: 0px 0px 10px 0px;
+  /* box-shadow: 0px 0px 10px 2px gray; */
+  border-radius: 0px 0px 20px 0px;
 }
 
 #message {
-  float: left;
   font-size: 1em;
   resize: none;
   padding: 0.5em;
-  width: 80% !important;
   border-radius: 20px 0px 0px 20px;
   border-width: 2px 0px 2px 2px;
   border-color: black;
   border-style: solid;
-  font-family: "Ubuntu", sans-serif;
-  height: 105% !important;
   text-indent: 1em;
+  flex: 4;
 }
 
 button#send_message {
-  float: left;
   border-radius: 0px 20px 20px 0px;
   border-width: 2px 2px 2px 0px;
   border-color: black;
   border-style: solid;
-  font-family: "Ubuntu", sans-serif;
   background-color: rgb(129, 129, 129);
-  width: 20%;
-  height: 105%;
   color: #5797ca;
   background-color: #3d4754;
   font-size: 1.5em;
+  flex-basis: 20%;
+  flex: 1;
 }
 
 button#send_message:active {
@@ -173,12 +213,13 @@ div.message:after {
 }
 
 div.message {
+  flex: 0;
+  width: 80%;
   font-size: 2.5vh;
   padding: 0.7em;
-  width: 70%;
   word-wrap: break-word;
   border-radius: 20px;
-  margin: 5px 5px 0px 5px;
+  flex-flow: row-reverse;
 }
 
 p.message {
@@ -199,15 +240,16 @@ span.username {
 }
 
 .self {
-  float: right;
   color: white;
   background-color: rgba(51, 49, 51, 0.7);
+  text-align: right;
+  margin: 5px 5px 0px auto;
 }
 
 .reg {
-  float: left;
   font-weight: bold;
   background-color: rgba(51, 49, 51, 0.4);
+  margin: 5px auto 0px 5px;
 }
 
 .self2 {
@@ -218,20 +260,21 @@ span.username {
   height: 0.3em;
   border: none;
   border-radius: 0.4em;
-  margin: 0.25em 0 0.5em 0.25em;
+  margin: 0.5em;
   background-color: rgb(75, 72, 72);
 }
 
 .refresh {
-  width: 4em;
-  height: 4em;
+  display: inline-block;
+  height: 7vh;
+  width: 7vh;
   background-image: url("./img/refresh.png");
   background-size: cover;
-  float: right;
   border: 2px solid orange;
   border-radius: 5em;
   background-color: rgba(0, 0, 0, 0);
-  margin: 0.5em 5% 0.5em 0.5em;
+  margin: 0;
+  padding: 0;
 }
 
 .refresh:focus,
@@ -246,11 +289,9 @@ span.username {
 
 .user {
   font-weight: bolder;
-  /*float: left;*/
 }
 
 .id {
-  float: right;
   font-weight: bolder;
   font-style: italic;
 }
@@ -258,7 +299,6 @@ span.username {
 .userWrapper {
   background-color: seashell;
   border-radius: 20px;
-  width: auto;
   height: auto;
   padding: 5px 40px 5px 15px;
   margin-bottom: 5px;
@@ -267,7 +307,6 @@ span.username {
 /*Custom scroll*/
 
 ::-webkit-scrollbar {
-  width: 10px;
 }
 /* Track */
 ::-webkit-scrollbar-track {
