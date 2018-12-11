@@ -4,36 +4,51 @@ function sendUsername(username, socket) {
     return;
   }
   socket.emit("change_username", { username: username.val() });
-  $("#change_username").hide();
-  $("#section_username").append(
-    `<p class="loggedin">You are logged in as: <b>${username.val()}</b></p>`
-  );
+  $(".changeUsername").hide();
+  $(".loggedin").show();
+  $("#loggedInUsername").text(username.val());
 }
 
-function sendMessage(username, message, socket) {
+function sendMessage(message, socket) {
   var text = message.val().trim();
-  if (text === "") return;
+  if (text === "") {
+    alert("You can't send an empty message!");
+    return;
+  }
   socket.emit("new_message", {
     message: text,
-    username: username.val(),
-    url: ValidURL(text)
+    time: `${moment().format("HH : mm")}`
   });
   message.val("");
+  message.scrollTop(0);
 }
 
-function generateEmptyString(len) {
-  var string = "";
-  for (let i = 0; i < len; i++) {
-    string += "&nbsp;";
-  }
-  return string;
+function generateListDiv(data) {
+  let d1 = `<div class="user" style="color:${data.color}">${
+    data.username
+  }</div>`;
+
+  let d2 = `<div class="id" id="${data.id}"></div>`;
+  return `<div  class="userWrapper">${d1}${d2}</div>`;
+
+  // return `<p class="user" id="${data.id}" style="color:${data.color}">${
+  //   data.username
+  // }</p>`;
 }
 
-function ValidURL(str) {
-  var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-  if (!regex.test(str)) {
-    return false;
+function myScroll(chatroom) {
+  chatroom.animate({ scrollTop: $("#chatroom").prop("scrollHeight") }, "fast");
+}
+
+function toggleFavicon(flag) {
+  let string = flag ? "icon" : "message";
+  let $favicon = $(`link[rel="${string}"]`);
+  if (flag) {
+    $favicon.attr("href", "message.ico");
+    $favicon.attr("rel", "message");
+    console.log("executed");
   } else {
-    return true;
+    $favicon.attr("href", "favicon.ico");
+    $favicon.attr("rel", "icon");
   }
 }

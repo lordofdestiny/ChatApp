@@ -1,36 +1,59 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <!--Head elements included for external file-->
+  <head>
+    <!-- Head elements included for external file -->
     <% include ../partials/head.ejs%>
-</head>
+  </head>
 
-<body>
-    <header>
-        <h1>Super Chat</h1>
-    </header>
+  <body>
+    <header class="header"><h1 class="mainTitle">Super Chat</h1></header>
 
-    <section id="section_username">
-        <div id="change_username">
-            <input id="username" type="text">
-            <button id="send_username" type="button">Change username</button>
+    <div class="main">
+      <div class="side">
+        <div class="sectionUsername">
+          <div class="changeUsername">
+            <input id="username" maxlength="30" type="text" />
+            <button id="send_username" class="sendUsername" type="button">
+              Change
+            </button>
+          </div>
+
+          <p class="loggedin">
+            You are logged in as:<br />
+            <b id="loggedInUsername"></b>
+          </p>
         </div>
-    </section>
 
-    <div style="clear: both"></div>
+        <div class="activeUsers">
+          <div class="activeUsersHeader">
+            <h2>Users online: <span id="count">0</span></h2>
+            <button class="refresh"></button>
+          </div>
 
-    <section id="chatroom">
-        <section id="feedback"></section>
-    </section>
+          <hr class="separator" />
 
-    <section id="input_zone">
-        <input id="message" class="vertical-align" type="text" />
-        <button id="send_message" class="vertical-align" type="button">Send</button>
-    </section>
+          <div id="users"></div>
+        </div>
+      </div>
 
-    <!--Javascript scripts-->
+      <div class="chat">
+        <div id="chatroom_wrapper"><div id="chatroom"></div></div>
+
+        <div id="input_zone">
+          <textarea
+            id="message"
+            placeholder="Message"
+            maxlength="500 "
+            autofocus
+          ></textarea>
+          <button id="send_message" class="vertical-align" type="button">
+            <b>Send</b>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Javascript scripts -->
     <% include ../partials/scripts.ejs %>
-</body>
-
+  </body>
 </html>

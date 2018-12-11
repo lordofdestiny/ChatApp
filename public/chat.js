@@ -1,12 +1,47 @@
 $(function() {
-  var socket = io.connect("http://192.168.9.224:3000");
+  var socket = io.connect("http://localhost:3000");
 
   var message = $("#message");
   var username = $("#username");
   var send_message = $("#send_message");
   var send_username = $("#send_username");
   var chatroom = $("#chatroom");
-  var feedback = $("#feedback");
+  var refresh = $(".refresh");
+  var users = $("#users");
+  var focused = true;
+  var messageCount = 0;
+  var title = $("title");
+  var titleDefault = title.text();
+  $(".loggedin").hide(); //because it shold not be seen at start
+
+  window.onfocus = function() {
+    focused = true;
+    messageCount = 0;
+    title.text(titleDefault);
+    toggleFavicon(false);
+  };
+
+  window.onblur = function() {
+    focused = false;
+  };
+
+  refresh.click(() => {
+    socket.emit("refreshList");
+    refresh.rotate();
+  });
+
+  socket.on("refreshList", data => {
+    users.empty();
+    let size = data.length - 1;
+    $("#count").replaceWith(`<span id="count">${size}</span>`);
+    for (let user of data) {
+      console.log(user);
+      if (socket.id != user.id) {
+        users.append(generateListDiv(user));
+        //isTyisTyping[user.id] = false;
+      }
+    }
+  });
 
   send_username.click(() => {
     sendUsername(username, socket);
@@ -21,49 +56,102 @@ $(function() {
   });
 
   send_message.click(() => {
-    sendMessage(username, message, socket);
+    sendMessage(message, socket);
   });
 
-  message.keypress(e => {
-    if (e.which == 13) {
-      sendMessage(username, message, socket);
-    }
+  message
+    .keypress(e => {
+      if (e.which == 13 && !e.shiftKey && !message.val().length <= 500) {
+        sendMessage(message, socket);
+      }
+    })
+    .keyup(e => {
+      if (e.which == 13 && !e.shiftKey) {
+        message.val("");
+      }
+    })
+    .keydown(() => {
+      if (message.val().length == 500) {
+        alert("Maximum message duration is 500 characters!");
+      }
+    });
+
+  socket.on("connected", data => {
+    socket.id = data.id;
+    socket.username = data.username;
+    socket.color = data.color;
+  });
+
+  socket.on("change_username", data => {
+    socket.username = data.username;
+  });
+
+  socket.on("declined", () => {
+    alert("You can't connct now, channel is ful!");
+    $("body")
+      .children()
+      .hide();
+    $("body").append(
+      `<h1 style="text-align: center">Please try again later, some user may leave chat!</h1`
+    );
   });
 
   socket.on("new_message", data => {
-    var style = "";
-    var cssClass =
-      data.username === username.val() ? "messageTo" : "messageFrom";
-    if (data.username === "Anonymous") {
-      cssClass += " " + "messageAnn";
+    let self = " reg";
+    let self2 = "";
+    if (data.id === socket.id) {
+      self = " self";
+      self2 = " self2";
     }
-    if (data.url) {
-      chatroom.append(
-        `<p class='message'>
-        <span class="${cssClass}">${data.username}</span> : 
-        <a href="${data.message}">${data.message}</a></p>`
-      );
-    } else {
-      chatroom.append(
-        `<p class='message'>
-        <span class="${cssClass}">${data.username}</span> : 
-        ${data.message}</p>`
-      );
+
+    let p = `<p class="message">
+              <span class="username${self2}" style="color: ${data.color}">${
+      data.username
+    } : </span>${data.message}</p>`;
+
+    let vreme = `<p class="time">${data.time}</p>`;
+
+    let div = `<div class="message${self}">
+                  ${p}
+                  ${vreme}
+               </div>`;
+
+    chatroom.append(div);
+
+    myScroll(chatroom);
+    $(`#${data.id}`).text("");
+    if (!focused) {
+      messageCount++;
+      $.titleAlert(`(${messageCount}) New chat message!`, {
+        requireBlur: false,
+        stopOnFocus: true,
+        duration: 4000,
+        interval: 700
+      });
     }
-    chatroom.animate(
-      { scrollTop: $("#chatroom").prop("scrollHeight") },
-      "medium"
-    );
-    feedback.html("");
+    if (data.id != socket.id) {
+      toggleFavicon(true);
+    }
   });
 
   message.bind("keypress", e => {
-    if (e.which != 13) {
-      socket.emit("typing");
+    if (e.which != 13 && e.which != 32) {
+      socket.emit("typing", { id: socket.id });
     }
   });
 
   socket.on("typing", data => {
-    feedback.html(`<p><i>${data.username} is typing...</i></p>`);
+    $(`#${data.id}`).text("is typing...");
+  });
+
+  socket.on("user_left", data => {
+    chatroom.append(`<div class='message reg'>
+    <p class="message">
+    <span style="color: ${data.color}; font-weight:bold">${
+      data.username
+    }</span> has left.</p>
+    <p class="time">${data.time}</p>
+    </div>`);
+    myScroll(chatroom);
   });
 });
