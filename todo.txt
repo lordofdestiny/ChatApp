@@ -1,6 +1,5 @@
 -E2E
 -Custom theme
 -Popup when joining
--Typing bug - you need to remove typing when message is empty
 -Add padding to chatroom
 -When you change username - color is wrong

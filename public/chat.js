@@ -35,10 +35,8 @@ $(function() {
     const size = data.length - 1;
     $("#count").replaceWith(`<span id="count">${size}</span>`);
     for (let user of data) {
-      console.log(user);
       if (socket.id != user.id) {
         $users.append(generateListDiv(user));
-        //isTyisTyping[user.id] = false;
       }
     }
   });
@@ -131,14 +129,22 @@ $(function() {
     }
   });
 
-  $message.bind("keypress", e => {
-    if (e.which != 13 && e.which != 32) {
+  $message.bind("keyup", e => {
+    if (e.which != 13 && e.which != 32 && e.target.value !== "") {
       socket.emit("typing", { id: socket.id });
+    }
+    if (e.target.value === "") {
+      socket.emit("stop_typing", { id: socket.id });
     }
   });
 
   socket.on("typing", data => {
     $(`#${data.id}`).text("is typing...");
+  });
+
+  socket.on("stop_typing", data => {
+    console.log(data.id);
+    $(`#${data.id}`).text("");
   });
 
   socket.on("user_left", data => {

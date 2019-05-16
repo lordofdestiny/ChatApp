@@ -72,12 +72,16 @@ io.on("connection", async socket => {
       });
     });
 
-    socket.on("typing", () => {
+    socket.on("typing", data => {
       socket.broadcast.emit("typing", {
         id: socket.id,
         username: socket.username,
         color: socket.color
       });
+    });
+
+    socket.on("stop_typing", data => {
+      socket.broadcast.emit("stop_typing", data);
     });
 
     socket.on("refresh_list", () => {
