@@ -1,6 +1,7 @@
 const express = require("express");
 const tools = require("./server/functions");
 const moment = require("moment");
+const appName = "Chat app";
 
 const app = express(),
   server = require("http").createServer(app),
@@ -18,26 +19,31 @@ app.get("/", (req, res) => {
 });
 
 server.listen(3000, () => {
-  console.log("Server listening on port 3000!");
+  console.log("Listening on port 3000!");
 });
 
-var number = 0;
-var maxUsers = 15;
-var colors = tools.getColors(15);
+server.on("exit", () => {
+  console.log("App is off!");
+});
+
+let userCount = 0;
+const maxUsers = 15;
+const colors = tools.getColors(15);
 
 io.on("connection", async socket => {
-  if (number >= maxUsers) {
+  if (userCount >= maxUsers) {
     socket.emit("declined");
     socket.disconnect(true);
   } else {
-    number++;
-    console.log(`User connected, current users ${number}`);
+    userCount++;
+    console.log(`New User - Connected users: ${userCount}`);
     socket.username = "Anonymous";
     socket.index = tools.findFree(colors, maxUsers);
     colors[socket.index].used = true;
     socket.color = colors[socket.index].color;
 
-    io.sockets.emit("refreshList", tools.generateUsers(io.sockets.clients()));
+    io.sockets.emit("refresh_list", tools.generateUsers(io.sockets.clients()));
+
     socket.emit("connected", {
       id: socket.id,
       color: socket.color,
@@ -45,10 +51,16 @@ io.on("connection", async socket => {
     });
 
     socket.on("change_username", data => {
+      const old = socket.usernamel;
       socket.username = data.username;
       socket.emit("change_username", { username: socket.username });
-      //console.log(`Username changed to ${data.username}`);
-      io.sockets.emit("refreshList", tools.generateUsers(io.sockets.clients()));
+
+      console.log(`${old} changed username to ${data.username}`);
+
+      io.sockets.emit(
+        "refresh_list",
+        tools.generateUsers(io.sockets.clients())
+      );
     });
 
     socket.on("new_message", data => {
@@ -61,7 +73,7 @@ io.on("connection", async socket => {
       });
     });
 
-    socket.on("typing", data => {
+    socket.on("typing", () => {
       socket.broadcast.emit("typing", {
         id: socket.id,
         username: socket.username,
@@ -69,15 +81,15 @@ io.on("connection", async socket => {
       });
     });
 
-    socket.on("refreshList", () => {
-      let all = tools.generateUsers(io.sockets.clients());
-      io.sockets.emit("refreshList", tools.generateUsers(io.sockets.clients()));
+    socket.on("refresh_list", () => {
+      const all = tools.generateUsers(io.sockets.clients());
+      io.sockets.emit("refresh_list", all);
     });
 
     socket.on("disconnect", async () => {
-      number--;
-      let all = await tools.generateUsers(io.sockets.clients());
-      io.sockets.emit("refreshList", all);
+      userCount--;
+      const all = await tools.generateUsers(io.sockets.clients());
+      io.sockets.emit("refresh_list", all);
       colors[socket.index].used = false;
       socket.broadcast.emit("user_left", {
         username: socket.username,
@@ -85,7 +97,7 @@ io.on("connection", async socket => {
         id: socket.id,
         time: moment().format("HH : mm")
       });
-      console.log(`User has left, current users: ${number}`);
+      console.log(`User left - Active users: ${userCount}`);
     });
   }
 });

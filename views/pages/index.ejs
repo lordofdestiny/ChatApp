@@ -6,26 +6,32 @@
   </head>
 
   <body>
-    <header class="header"><h1 class="mainTitle">Super Chat</h1></header>
 
-    <div class="main">
-      <div class="side">
-        <div class="sectionUsername">
-          <div class="changeUsername">
-            <input id="username" maxlength="30" type="text" />
-            <button id="send_username" class="sendUsername" type="button">
-              Change
-            </button>
+    <main>
+      <div class="left">
+        <div class="upper-left">
+          <header>
+            <h1 class="main-title">Super Chat</h1>
+          </header>
+          <div id="hr-wrap">
+            <hr id="title-separator"/>
           </div>
-
-          <p class="loggedin">
-            You are logged in as:<br />
-            <b id="loggedInUsername"></b>
-          </p>
+          <div class="section-username">
+            <div class="change-username">
+              <p id="enter-username">Change your username: </p>
+              <div class="username-changer">
+                <input id="username" maxlength="30" type="text" />
+                <button id="send-username">Change</button>
+              </div>
+            </div>
+            <p id="loggedin" style="display: none">
+              You are logged in as: <b id="loggedInUsername"></b>
+            </p>
+          </div>
         </div>
 
-        <div class="activeUsers">
-          <div class="activeUsersHeader">
+        <div class="active-users">
+          <div class="active-users-header">
             <h2>Users online: <span id="count">0</span></h2>
             <button class="refresh"></button>
           </div>
@@ -37,21 +43,21 @@
       </div>
 
       <div class="chat">
-        <div id="chatroom_wrapper"><div id="chatroom"></div></div>
-
-        <div id="input_zone">
-          <textarea
-            id="message"
-            placeholder="Message"
-            maxlength="500 "
-            autofocus
-          ></textarea>
-          <button id="send_message" class="vertical-align" type="button">
-            <b>Send</b>
-          </button>
-        </div>
+          <div id="chatroom">
+          </div>
+          <div id="input-zone">
+            <textarea
+              id="message"
+              placeholder="Message"
+              maxlength="500 "
+              autofocus
+            ></textarea>
+            <button id="send-message">
+              Send
+            </button>
+          </div>
       </div>
-    </div>
+    </main>
 
     <!-- Javascript scripts -->
     <% include ../partials/scripts.ejs %>
