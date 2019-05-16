@@ -68,8 +68,7 @@ io.on("connection", async socket => {
         message: tools.urlify(data.message),
         username: socket.username,
         color: socket.color,
-        id: socket.id,
-        time: data.time
+        id: socket.id
       });
     });
 

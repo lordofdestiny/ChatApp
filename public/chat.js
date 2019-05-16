@@ -97,12 +97,9 @@ $(function() {
   });
 
   socket.on("new_message", data => {
-    let self = " reg";
-    let self2 = "";
-    if (data.id === socket.id) {
-      self = " self";
-      self2 = " self2";
-    }
+    const time = `${moment().format("HH : mm")}`;
+    const self = data.id === socket.id ? " self" : " reg";
+    const self2 = data.id === socket.id ? " self2" : "";
 
     const p = `<p class="message">
                 <span class="username${self2}" style="color: ${data.color}">
@@ -110,7 +107,7 @@ $(function() {
                 ${data.message}
               </p>`;
 
-    const vreme = `<p class="time">${data.time}</p>`;
+    const vreme = `<p class="time">${time}</p>`;
 
     const div = `<div class="message${self}">
                   ${p} ${vreme}
