@@ -8,6 +8,7 @@ $(function() {
   const $chatroom = $("#chatroom");
   const $refresh = $(".refresh");
   const $users = $("#users");
+  const $popup = $("#popup");
   const $title = $("title");
   const titleDefault = $title.text();
 
@@ -33,12 +34,16 @@ $(function() {
   socket.on("refresh_list", data => {
     $users.empty();
     const size = data.length - 1;
-    $("#count").replaceWith(`<span id="count">${size}</span>`);
-    for (let user of data) {
+    $("#count").text(size);
+    for (const user of data) {
       if (socket.id != user.id) {
         $users.append(generateListDiv(user));
       }
     }
+  });
+
+  socket.on("new_user", data => {
+    displayNewUserPopup(data);
   });
 
   $send_username.click(() => {

@@ -1,3 +1,6 @@
 -E2E
 -Custom theme
 -Popup when joining
+-Popup on username change
+-Add lost connection block and message popup
+-Scroll to bottom button

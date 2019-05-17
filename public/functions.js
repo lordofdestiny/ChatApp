@@ -46,3 +46,8 @@ function toggleFavicon(flag) {
     $favicon.attr("rel", "icon");
   }
 }
+
+function displayNewUserPopup(user) {
+  $(".popup")[0].children.text.innerHTML = `${user.username} has joined!`;
+  console.log(user);
+}

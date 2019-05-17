@@ -28,7 +28,7 @@ server.on("exit", () => {
 
 let userCount = 0;
 const maxUsers = 15;
-const colors = tools.getColors(15);
+const colors = tools.getColors(maxUsers);
 
 io.on("connection", async socket => {
   if (userCount >= maxUsers) {
@@ -43,6 +43,12 @@ io.on("connection", async socket => {
     socket.color = colors[socket.index].color;
 
     io.sockets.emit("refresh_list", tools.generateUsers(io.sockets.clients()));
+
+    socket.broadcast.emit("new_user", {
+      id: socket.id,
+      color: socket.color,
+      username: socket.username
+    });
 
     socket.emit("connected", {
       id: socket.id,
