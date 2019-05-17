@@ -8,7 +8,6 @@ $(function() {
   const $chatroom = $("#chatroom");
   const $refresh = $(".refresh");
   const $users = $("#users");
-  const $popup = $("#popup");
   const $title = $("title");
   const titleDefault = $title.text();
 
@@ -43,7 +42,9 @@ $(function() {
   });
 
   socket.on("new_user", data => {
-    displayNewUserPopup(data);
+    //displayNewUserPopup(data);
+    $chatroom.append(makeELMessage(data, "joined"));
+    myScroll($chatroom);
   });
 
   $send_username.click(() => {
@@ -100,23 +101,7 @@ $(function() {
   });
 
   socket.on("new_message", data => {
-    const time = `${moment().format("HH : mm")}`;
-    const self = data.id === socket.id ? " self" : " reg";
-    const self2 = data.id === socket.id ? " self2" : "";
-
-    const p = `<p class="message">
-                <span class="username${self2}" style="color: ${data.color}">
-                ${data.username} : </span>
-                ${data.message}
-              </p>`;
-
-    const vreme = `<p class="time">${time}</p>`;
-
-    const div = `<div class="message${self}">
-                  ${p} ${vreme}
-                </div>`;
-
-    $chatroom.append(div);
+    $chatroom.append(makeMessage(data, socket));
 
     myScroll($chatroom);
     $(`#${data.id}`).text("");
@@ -125,7 +110,7 @@ $(function() {
       $.titleAlert(`(${messageCount}) New chat message!`, {
         requireBlur: false,
         stopOnFocus: true,
-        duration: 4000,
+        duration: 5000,
         interval: 700
       });
     }
@@ -148,18 +133,11 @@ $(function() {
   });
 
   socket.on("stop_typing", data => {
-    console.log(data.id);
     $(`#${data.id}`).text("");
   });
 
   socket.on("user_left", data => {
-    $chatroom.append(`<div class='message reg'>
-    <p class="message">
-    <span style="color: ${data.color}; font-weight:bold">${
-      data.username
-    }</span> has left.</p>
-    <p class="time">${data.time}</p>
-    </div>`);
+    $chatroom.append(makeELMessage(data, "left"));
     myScroll($chatroom);
   });
 });

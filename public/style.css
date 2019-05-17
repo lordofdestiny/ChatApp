@@ -5,8 +5,8 @@
 * {
   font-family: "Ubuntu", sans-serif;
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 body {
@@ -41,14 +41,14 @@ header h1 {
 /*Main*/
 
 main {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
   background-image: url("../img/wallpaper.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  display: flex;
+  height: 100%;
+  justify-content: center;
   overflow: hidden;
+  width: 100%;
 }
 
 .left {
@@ -86,21 +86,21 @@ main {
 }
 
 .username-changer {
-  padding: 0.5em;
   display: flex;
   flex-flow: row nowrap;
+  padding: 0.5em;
 }
 
 #username {
-  display: flex;
   border-color: black;
   border-style: solid;
   border-width: 2px 0px 2px 2px;
   border-radius: 10px 0px 0px 10px;
-  text-indent: 1em;
+  display: flex;
   font-size: medium;
-  padding: 0.25em 0;
   flex: 2;
+  text-indent: 1em;
+  padding: 0.25em 0;
 }
 
 #send-username {
@@ -126,34 +126,33 @@ main {
 /*Active users*/
 
 .active-users {
+  background-color: orange;
   border-color: gray;
   border-style: solid;
   border-width: 0px 3px 0px 0px;
   display: flex;
   flex-basis: 100%;
-  background-color: orange;
-  justify-content: flex-start;
   flex-flow: column nowrap;
+  justify-content: flex-start;
   padding: 0.5em 0.5em 0.5em 0.5em;
   padding-left: 1em;
   padding-right: 1em;
 }
 
 .active-users-header {
+  align-items: center;
   display: flex;
   flex-grow: 0;
   flex-flow: row nowrap;
-  align-items: stretch;
   justify-content: space-between;
-  align-items: center;
 }
 
 #users {
-  overflow-y: auto;
   display: flex;
+  flex-basis: 100%;
   flex-flow: column nowrap;
   flex-grow: 1;
-  flex-basis: 100%;
+  overflow-y: auto;
 }
 
 /*Chat*/
@@ -182,23 +181,23 @@ div#chatroom {
 }
 
 div#input-zone {
-  flex: 1;
-  display: flex;
-  flex-flow: row nowrap;
   background-color: orange;
+  display: flex;
+  flex: 1;
+  flex-flow: row nowrap;
   padding: 0.5em;
 }
 
 #message {
-  font-size: medium;
-  resize: none;
-  padding: 0.5em;
-  border-radius: 20px 0px 0px 20px;
-  border-width: 2px 0px 2px 2px;
   border-color: black;
+  border-radius: 20px 0px 0px 20px;
   border-style: solid;
-  text-indent: 1em;
+  border-width: 2px 0px 2px 2px;
   flex: 4;
+  font-size: medium;
+  padding: 0.5em;
+  resize: none;
+  text-indent: 1em;
 }
 
 button#send-message {
@@ -216,27 +215,27 @@ button#send-message {
 }
 
 button#send-message:active {
-  color: #3d4754;
   background-color: #5797ca;
+  color: #3d4754;
 }
 
 div.message:after {
   content: "";
-  display: block;
   clear: both;
+  display: block;
 }
 
 div.message {
+  border-radius: 20px;
   flex: 0;
-  width: fit-content;
+  flex-flow: row-reverse;
+  font-size: large;
   min-width: 10%;
   max-width: 70%;
-  font-size: large;
   padding: 0.7em;
-  word-wrap: break-word;
-  border-radius: 20px;
-  flex-flow: row-reverse;
   text-indent: 1em;
+  word-wrap: break-word;
+  width: fit-content;
 }
 
 p.time {
@@ -271,9 +270,9 @@ span.username {
 
 .separator {
   background-color: rgba(51, 49, 51, 1);
-  height: 0.3em;
   border: none;
   border-radius: 0.4em;
+  height: 0.3em;
   margin: 0.5em 0;
 }
 

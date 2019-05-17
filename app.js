@@ -69,13 +69,14 @@ io.on("connection", async socket => {
       );
     });
 
-    socket.on("new_message", data => {
+    socket.on("new_message", (data, callback) => {
       io.sockets.emit("new_message", {
         message: tools.urlify(data.message),
         username: socket.username,
         color: socket.color,
         id: socket.id
       });
+      // callback({ ok: true, message: "Your message has been sent!" });
     });
 
     socket.on("typing", data => {
@@ -103,8 +104,7 @@ io.on("connection", async socket => {
       socket.broadcast.emit("user_left", {
         username: socket.username,
         color: socket.color,
-        id: socket.id,
-        time: moment().format("HH : mm")
+        id: socket.id
       });
       console.log(`User left - Active users: ${userCount}`);
     });
