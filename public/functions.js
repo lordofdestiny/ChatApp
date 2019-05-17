@@ -32,7 +32,7 @@ function generateListDiv(data) {
 }
 
 function myScroll($chatroom) {
-  $chatroom.animate({ scrollTop: $("#chatroom").prop("scrollHeight") }, "fast");
+  $chatroom.animate({ scrollTop: $chatroom.prop("scrollHeight") }, "fast");
 }
 
 function toggleFavicon(flag) {
@@ -41,7 +41,6 @@ function toggleFavicon(flag) {
   if (flag) {
     $favicon.attr("href", "message.ico");
     $favicon.attr("rel", "message");
-    console.log("executed");
   } else {
     $favicon.attr("href", "favicon.ico");
     $favicon.attr("rel", "icon");

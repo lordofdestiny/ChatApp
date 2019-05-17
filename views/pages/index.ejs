@@ -6,30 +6,23 @@
   </head>
 
   <body>
+    <header>
+      <h1 class="main-title">Super Chat</h1>
+        <div class="section-username">
+          <div class="change-username">
+            <div class="username-changer">
+              <input id="username" maxlength="30" placeholder="Change username" type="text" />
+              <button id="send-username">Change</button>
+            </div>
+          </div>
+          <p id="loggedin" style="display: none">
+            Welcome <span id="loggedInUsername"></span> !!!
+          </p>
+        </div>
+    </header>
 
     <main>
       <div class="left">
-        <div class="upper-left">
-          <header>
-            <h1 class="main-title">Super Chat</h1>
-          </header>
-          <div id="hr-wrap">
-            <hr id="title-separator"/>
-          </div>
-          <div class="section-username">
-            <div class="change-username">
-              <p id="enter-username">Change your username: </p>
-              <div class="username-changer">
-                <input id="username" maxlength="30" type="text" />
-                <button id="send-username">Change</button>
-              </div>
-            </div>
-            <p id="loggedin" style="display: none">
-              You are logged in as: <b id="loggedInUsername"></b>
-            </p>
-          </div>
-        </div>
-
         <div class="active-users">
           <div class="active-users-header">
             <h2>Users online: <span id="count">0</span></h2>
@@ -43,20 +36,23 @@
       </div>
 
       <div class="chat">
+        <div id="chatroom-wrapper">
           <div id="chatroom">
           </div>
-          <div id="input-zone">
-            <textarea
-              id="message"
-              placeholder="Message"
-              maxlength="500 "
-              autofocus
-            ></textarea>
-            <button id="send-message">
-              Send
-            </button>
-          </div>
+        </div>
+        <div id="input-zone">
+          <textarea
+            id="message"
+            placeholder="Type here!"
+            maxlength="500 "
+            autofocus
+          ></textarea>
+          <button id="send-message">
+            Send
+          </button>
+        </div>
       </div>
+      
     </main>
 
     <!-- Javascript scripts -->
