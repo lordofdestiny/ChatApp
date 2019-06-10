@@ -1,7 +1,7 @@
 const express = require("express");
 const tools = require("./server/functions");
 const moment = require("moment");
-const appName = "Chat app";
+const port = 80;
 
 const app = express(),
   server = require("http").createServer(app),
@@ -18,8 +18,8 @@ app.get("/", (req, res) => {
   res.render("pages/index");
 });
 
-server.listen(3000, () => {
-  console.log("Listening on port 3000!");
+server.listen(port, () => {
+  console.log(`Listening on port ${port}!`);
 });
 
 server.on("exit", () => {
@@ -57,7 +57,7 @@ io.on("connection", async socket => {
     });
 
     socket.on("change_username", data => {
-      const old = socket.usernamel;
+      const old = socket.username;
       socket.username = data.username;
       socket.emit("change_username", { username: socket.username });
 

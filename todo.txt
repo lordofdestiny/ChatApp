@@ -2,3 +2,5 @@
 -Custom theme
 -Add lost connection block and message popup
 -Scroll to bottom button
+-change username multiple times
+-message for username change

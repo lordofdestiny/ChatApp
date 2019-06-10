@@ -375,3 +375,24 @@ p.popup-text {
   width: 20px;
   height: 20px;
 }
+
+#scroll-bottom {
+  align-items: center;
+  background-color: white;
+  border: 2px solid gray;
+  border-radius: 50px;
+  color: gray;
+  display: none;
+  font-size: 2em;
+  justify-content: center;
+  height: 50px;
+  position: fixed;
+  text-align: center;
+  width: 50px;
+  bottom: 80px;
+  right: 10px;
+}
+
+#scroll-bottom:focus {
+  outline: none;
+}

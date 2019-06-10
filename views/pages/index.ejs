@@ -11,7 +11,7 @@
         <div class="section-username">
           <div class="change-username">
             <div class="username-changer">
-              <input id="username" maxlength="30" placeholder="Change username" type="text" />
+              <input id="username" maxlength="30" autocomplete="off" placeholder="Change username" type="text" />
               <button id="send-username">Change</button>
             </div>
           </div>
@@ -28,7 +28,7 @@
             <h2>Users online: <span id="count">0</span></h2>
             <button class="refresh"></button>
           </div>
-
+          
           <hr class="separator" />
 
           <div id="users"></div>
@@ -39,6 +39,7 @@
         <div id="chatroom-wrapper">
           <div id="chatroom">
           </div>
+          <button id="scroll-bottom"><span class="fas fa-angle-double-down"></span></button>
         </div>
         <div id="input-zone">
           <textarea

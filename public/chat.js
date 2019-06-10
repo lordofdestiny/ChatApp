@@ -1,5 +1,5 @@
 $(function() {
-  const socket = io.connect("http://localhost:3000");
+  const socket = io.connect("http://localhost");
 
   const $message = $("#message");
   const $username = $("#username");
@@ -7,6 +7,7 @@ $(function() {
   const $send_username = $("#send-username");
   const $chatroom = $("#chatroom");
   const $refresh = $(".refresh");
+  const $scroll = $("#scroll-bottom");
   const $users = $("#users");
   const $title = $("title");
   const titleDefault = $title.text();
@@ -28,6 +29,19 @@ $(function() {
   $refresh.click(() => {
     socket.emit("refresh_list");
     $refresh.rotate();
+  });
+
+  $scroll.click(() => {
+    myScroll($chatroom);
+  });
+
+  $chatroom.scroll(() => {
+    console.log($chatroom.scrollTop());
+    if ($chatroom.scrollTop() <= 50) {
+      $scroll.css("display", "flex");
+    } else {
+      $scroll.css("display", "none");
+    }
   });
 
   socket.on("refresh_list", data => {
