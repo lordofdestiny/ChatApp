@@ -1,5 +1,7 @@
 $(function() {
-  const socket = io.connect("http://localhost");
+  // const socket = io.connect("http://localhost");
+
+  const socket = io();
 
   const $message = $("#message");
   const $username = $("#username");
@@ -36,8 +38,11 @@ $(function() {
   });
 
   $chatroom.scroll(() => {
-    console.log($chatroom.scrollTop());
-    if ($chatroom.scrollTop() <= 50) {
+    const threshold =
+      $chatroom[0].scrollHeight -
+      $chatroom.outerHeight() -
+      $chatroom.scrollTop();
+    if (threshold >= $chatroom.outerHeight() / 2) {
       $scroll.css("display", "flex");
     } else {
       $scroll.css("display", "none");
