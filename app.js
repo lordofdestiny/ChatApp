@@ -7,7 +7,7 @@ const app = express(),
   server = require("http").createServer(app),
   io = require("socket.io").listen(server);
 
-//set the template engine e js
+//set the template engine ejs
 app.set("view engine", "ejs");
 
 //middlewares
