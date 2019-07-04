@@ -6,30 +6,29 @@
   </head>
 
   <body>
-    <header class="header"><h1 class="mainTitle">Super Chat</h1></header>
-
-    <div class="main">
-      <div class="side">
-        <div class="sectionUsername">
-          <div class="changeUsername">
-            <input id="username" maxlength="30" type="text" />
-            <button id="send_username" class="sendUsername" type="button">
-              Change
-            </button>
+    <header>
+      <h1 class="main-title">Super Chat</h1>
+        <div class="section-username">
+          <div class="change-username">
+            <div class="username-changer">
+              <input id="username" maxlength="30" autocomplete="off" placeholder="Change username" type="text" />
+              <button id="send-username">Change</button>
+            </div>
           </div>
-
-          <p class="loggedin">
-            You are logged in as:<br />
-            <b id="loggedInUsername"></b>
+          <p id="loggedin" style="display: none">
+            Welcome <span id="loggedInUsername"></span> !!!
           </p>
         </div>
+    </header>
 
-        <div class="activeUsers">
-          <div class="activeUsersHeader">
+    <main>
+      <div class="left">
+        <div class="active-users">
+          <div class="active-users-header">
             <h2>Users online: <span id="count">0</span></h2>
             <button class="refresh"></button>
           </div>
-
+          
           <hr class="separator" />
 
           <div id="users"></div>
@@ -37,22 +36,32 @@
       </div>
 
       <div class="chat">
-        <div id="chatroom_wrapper"><div id="chatroom"></div></div>
-
-        <div id="input_zone">
+        <div id="chatroom-wrapper">
+          <div id="chatroom">
+          </div>
+          <button id="scroll-bottom"><span class="fas fa-angle-double-down"></span></button>
+        </div>
+        <div id="input-zone">
           <textarea
             id="message"
-            placeholder="Message"
+            placeholder="Type here!"
             maxlength="500 "
             autofocus
           ></textarea>
-          <button id="send_message" class="vertical-align" type="button">
-            <b>Send</b>
+          <button id="send-message">
+            Send
           </button>
         </div>
       </div>
-    </div>
-
+      
+    </main>
+    
+    <!--<footer>
+      <div class="popup">
+        <p class="popup-text" name="text">This is some beta text</p>
+        <span class="popup-icon fas fa-times"></span>
+      </div>
+    </footer>-->
     <!-- Javascript scripts -->
     <% include ../partials/scripts.ejs %>
   </body>

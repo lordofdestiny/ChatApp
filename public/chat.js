@@ -1,23 +1,26 @@
 $(function() {
-  var socket = io.connect("http://localhost:3000");
+  // const socket = io.connect("http://localhost");
 
-  var message = $("#message");
-  var username = $("#username");
-  var send_message = $("#send_message");
-  var send_username = $("#send_username");
-  var chatroom = $("#chatroom");
-  var refresh = $(".refresh");
-  var users = $("#users");
-  var focused = true;
-  var messageCount = 0;
-  var title = $("title");
-  var titleDefault = title.text();
-  $(".loggedin").hide(); //because it shold not be seen at start
+  const socket = io();
+
+  const $message = $("#message");
+  const $username = $("#username");
+  const $send_message = $("#send-message");
+  const $send_username = $("#send-username");
+  const $chatroom = $("#chatroom");
+  const $refresh = $(".refresh");
+  const $scroll = $("#scroll-bottom");
+  const $users = $("#users");
+  const $title = $("title");
+  const titleDefault = $title.text();
+
+  let focused = true;
+  let messageCount = 0;
 
   window.onfocus = function() {
     focused = true;
     messageCount = 0;
-    title.text(titleDefault);
+    $title.text(titleDefault);
     toggleFavicon(false);
   };
 
@@ -25,53 +28,73 @@ $(function() {
     focused = false;
   };
 
-  refresh.click(() => {
-    socket.emit("refreshList");
-    refresh.rotate();
+  $refresh.click(() => {
+    socket.emit("refresh_list");
+    $refresh.rotate();
   });
 
-  socket.on("refreshList", data => {
-    users.empty();
-    let size = data.length - 1;
-    $("#count").replaceWith(`<span id="count">${size}</span>`);
-    for (let user of data) {
-      console.log(user);
+  $scroll.click(() => {
+    myScroll($chatroom);
+  });
+
+  $chatroom.scroll(() => {
+    const threshold =
+      $chatroom[0].scrollHeight -
+      $chatroom.outerHeight() -
+      $chatroom.scrollTop();
+    if (threshold >= $chatroom.outerHeight() / 2) {
+      $scroll.css("display", "flex");
+    } else {
+      $scroll.css("display", "none");
+    }
+  });
+
+  socket.on("refresh_list", data => {
+    $users.empty();
+    const size = data.length - 1;
+    $("#count").text(size);
+    for (const user of data) {
       if (socket.id != user.id) {
-        users.append(generateListDiv(user));
-        //isTyisTyping[user.id] = false;
+        $users.append(generateListDiv(user));
       }
     }
   });
 
-  send_username.click(() => {
-    sendUsername(username, socket);
-    currentUsername = username.val();
+  socket.on("new_user", data => {
+    //displayNewUserPopup(data);
+    $chatroom.append(makeELMessage(data, "joined"));
+    myScroll($chatroom);
   });
 
-  username.keypress(e => {
+  $send_username.click(() => {
+    sendUsername($username, socket);
+    currentUsername = $username.val();
+  });
+
+  $username.keypress(e => {
     if (e.which == 13) {
-      sendUsername(username, socket);
-      currentUsername = username.val();
+      sendUsername($username, socket);
+      currentUsername = $username.val();
     }
   });
 
-  send_message.click(() => {
-    sendMessage(message, socket);
+  $send_message.click(() => {
+    sendMessage($message, socket);
   });
 
-  message
+  $message
     .keypress(e => {
-      if (e.which == 13 && !e.shiftKey && !message.val().length <= 500) {
-        sendMessage(message, socket);
+      if (e.which == 13 && !e.shiftKey && !$message.val().length <= 500) {
+        sendMessage($message, socket);
       }
     })
     .keyup(e => {
       if (e.which == 13 && !e.shiftKey) {
-        message.val("");
+        $message.val("");
       }
     })
     .keydown(() => {
-      if (message.val().length == 500) {
+      if ($message.val().length == 500) {
         alert("Maximum message duration is 500 characters!");
       }
     });
@@ -97,35 +120,16 @@ $(function() {
   });
 
   socket.on("new_message", data => {
-    let self = " reg";
-    let self2 = "";
-    if (data.id === socket.id) {
-      self = " self";
-      self2 = " self2";
-    }
+    $chatroom.append(makeMessage(data, socket));
 
-    let p = `<p class="message">
-              <span class="username${self2}" style="color: ${data.color}">${
-      data.username
-    } : </span>${data.message}</p>`;
-
-    let vreme = `<p class="time">${data.time}</p>`;
-
-    let div = `<div class="message${self}">
-                  ${p}
-                  ${vreme}
-               </div>`;
-
-    chatroom.append(div);
-
-    myScroll(chatroom);
+    myScroll($chatroom);
     $(`#${data.id}`).text("");
     if (!focused) {
       messageCount++;
       $.titleAlert(`(${messageCount}) New chat message!`, {
         requireBlur: false,
         stopOnFocus: true,
-        duration: 4000,
+        duration: 5000,
         interval: 700
       });
     }
@@ -134,9 +138,12 @@ $(function() {
     }
   });
 
-  message.bind("keypress", e => {
-    if (e.which != 13 && e.which != 32) {
+  $message.bind("keyup", e => {
+    if (e.which != 13 && e.which != 32 && e.target.value !== "") {
       socket.emit("typing", { id: socket.id });
+    }
+    if (e.target.value === "") {
+      socket.emit("stop_typing", { id: socket.id });
     }
   });
 
@@ -144,14 +151,12 @@ $(function() {
     $(`#${data.id}`).text("is typing...");
   });
 
+  socket.on("stop_typing", data => {
+    $(`#${data.id}`).text("");
+  });
+
   socket.on("user_left", data => {
-    chatroom.append(`<div class='message reg'>
-    <p class="message">
-    <span style="color: ${data.color}; font-weight:bold">${
-      data.username
-    }</span> has left.</p>
-    <p class="time">${data.time}</p>
-    </div>`);
-    myScroll(chatroom);
+    $chatroom.append(makeELMessage(data, "left"));
+    myScroll($chatroom);
   });
 });

@@ -2,11 +2,11 @@ function rainbow(numOfSteps, step) {
   // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
   // Adam Cole, 2011-Sept-14
   // HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
-  var r, g, b;
-  var h = step / numOfSteps;
-  var i = ~~(h * 6);
-  var f = h * 6 - i;
-  var q = 1 - f;
+  let r, g, b;
+  const h = step / numOfSteps;
+  const i = ~~(h * 6);
+  let f = h * 6 - i;
+  let q = 1 - f;
   switch (i % 6) {
     case 0:
       r = 1;
@@ -39,7 +39,7 @@ function rainbow(numOfSteps, step) {
       b = q;
       break;
   }
-  var c =
+  const c =
     "#" +
     ("00" + (~~(r * 255)).toString(16)).slice(-2) +
     ("00" + (~~(g * 255)).toString(16)).slice(-2) +
@@ -48,7 +48,7 @@ function rainbow(numOfSteps, step) {
 }
 
 function urlify(text) {
-  var urlRegex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+  const urlRegex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
   return text.replace(urlRegex, url => {
     return `<a href="${url}">${url}</a>`;
   });
@@ -59,8 +59,7 @@ function urlify(text) {
 function getColors(size) {
   let colors = [];
   for (let i = 0; i < size; i++) {
-    color = rainbow(15, i);
-    colors[i] = { color: color, used: false };
+    colors.push({ color: rainbow(15, i), used: false });
   }
   return colors;
 }
@@ -73,14 +72,12 @@ function findFree(colors, size) {
 }
 
 function generateUsers(clients) {
-  let object = clients.server.sockets.connected;
+  const object = clients.server.sockets.connected;
   let all = [];
-  let i = 0;
-  for (var prop in object) {
-    let sct = object[prop];
+  for (const prop in object) {
+    const sct = object[prop];
     if (sct.connected) {
-      all[i] = { id: sct.id, color: sct.color, username: sct.username };
-      i++;
+      all.push({ id: sct.id, color: sct.color, username: sct.username });
     }
   }
   return all;
