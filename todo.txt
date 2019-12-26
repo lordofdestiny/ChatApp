@@ -1,5 +1,5 @@
--E2E
--Custom theme
+-E2EE @ Makes no sense since it's public chat...
+-Custom theme @  who gives a s**t
 -Add lost connection block and message popup
 -Scroll to bottom button
 -change username multiple times
