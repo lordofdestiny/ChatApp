@@ -1,7 +1,7 @@
 const express = require("express");
 const tools = require("./server/functions");
 const moment = require("moment");
-const port = 80;
+const port = 8080;
 
 const app = express(),
   server = require("http").createServer(app),
